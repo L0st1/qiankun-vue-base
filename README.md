@@ -1,7 +1,7 @@
 # 基座应用，或者说主应用
-qiankun
-Vue.js3\Vuex\Vue Cli5\Vue Router
-ELement Plus\Alova
+qiankun 
+Vue.js3\Vuex\Vue Cli5\Vue Router 
+ELement Plus\Alova 
 
 # app-vue3-default
 

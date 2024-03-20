@@ -11,7 +11,7 @@ export const useQiankun = (
   startOptions: any = {
     prefetch: false,
     sandbox: {
-      // strictStyleIsolation: true,
+      strictStyleIsolation: true,
     },
   },
   defaultApp = "",

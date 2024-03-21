@@ -3,6 +3,8 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 
+import "@/style/index.scss";
+
 import ElementPlus from "element-plus";
 import "@/style/element/index.scss";
 //@ts-expect-error
@@ -20,7 +22,7 @@ createApp(App)
     locale: zhCn,
     namespace: "base",
   })
-  .mount("#app");
+  .mount("#base-app");
 
 nextTick(() => {
   useQiankun();

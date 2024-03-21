@@ -12,6 +12,7 @@ export const useQiankun = (
     prefetch: false,
     sandbox: {
       strictStyleIsolation: true,
+      // experimentalStyleIsolation: true
     },
   },
   defaultApp = "",

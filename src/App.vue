@@ -19,20 +19,20 @@ const router = useRouter();
 // 这是因为点击子应用路由后，浏览器的history发生了变更，但主应用路由实例并未得到通知，所以再使用router-link发动变更时会出错
 // 使用a标签不会，但a标签会触发重新导航（影响用户体验，与现在前端路由理念相悖）
 
-// 且控制台持续警告不存在子应用的路径————暂未解决
-
 // 解决如下：
 const routerReplace = () => {
   router.replace("/app-vue3");
 };
 </script>
 <style lang="scss">
-#app {
+#base-app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  height: 100vh;
+  width: 100vw;
 }
 
 nav {

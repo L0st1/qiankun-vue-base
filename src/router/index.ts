@@ -20,6 +20,11 @@ const routes: Array<RouteRecordRaw> = [
     name: 'MicroApp',
     component: MicroAppRoute, // 一个空内容的组件
   },
+  {
+    path: '/:pathMatch(.*)*', // 将匹配所有路由，不存在路由重定向
+    name: 'NotFound',
+    redirect: "/about"
+  }
 ];
 
 const router = createRouter({

@@ -1,5 +1,5 @@
 <template>
-  <nav>
+  <nav class="base-nav">
     <router-link to="/about">About</router-link> |
     <!-- <router-link to="/app-vue-hash/">app1</router-link> | -->
     <!-- <router-link to="/app-vue-history/">app2</router-link> | -->
@@ -35,7 +35,7 @@ const routerReplace = () => {
   width: 100vw;
 }
 
-nav {
+.base-nav {
   padding: 30px;
 
   a {

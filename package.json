@@ -5,7 +5,7 @@
   "config": {
     "publicName": "base",
     "publicPath": "/",
-    "port": 8080,
+    "port": 8500,
     "pageTitle": "主应用"
   },
   "scripts": {
@@ -20,6 +20,7 @@
     "core-js": "^3.8.3",
     "element-plus": "^2.6.1",
     "qiankun": "^2.10.16",
+    "string-replace-loader": "^3.1.0",
     "unplugin-element-plus": "0.8.0",
     "vue": "^3.2.13",
     "vue-router": "^4.0.3",

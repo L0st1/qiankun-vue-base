@@ -134,6 +134,17 @@ module.exports = defineConfig({
     },
   },
   chainWebpack(config) {
+    // 避免全局样式无法注入shadow dom，也可手动添加:host
+    // 如需更改第三方库样式，需要使用css-in-js方案
+    config.module
+    .rule("string-replace-loader")
+    .test(/\.scss$/)
+    .use("string-replace-loader")
+    .loader("string-replace-loader")
+    .options({
+      search: ":root",
+      replace: ":root, :host",
+    });
     // 移除 preload 插件
     config.plugins.delete("preload");
     // 移除 prefetch 插件

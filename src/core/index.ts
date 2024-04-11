@@ -10,10 +10,11 @@ import { appList } from "./entry";
 export const useQiankun = (
   startOptions: any = {
     prefetch: false,
-    sandbox: {
-      strictStyleIsolation: true,
+    // sandbox: {
+      // strictStyleIsolation: true,
       // experimentalStyleIsolation: true
-    },
+    // },
+    sandbox: true,
   },
   defaultApp = "",
   runAfterFirstMountedCb?: () => void

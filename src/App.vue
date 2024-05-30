@@ -1,30 +1,15 @@
 <template>
-  <!-- <nav class="base-nav">
-    <router-link to="/about">About</router-link> |
-    <router-link to="/app-vue-hash/">app1</router-link> |
-    <router-link to="/app-vue-history/">app2</router-link> |
-    <router-link to="/app-vue3">app-vue3</router-link> |
-    <a href="/about">a标签跳转</a>
-    <el-button @click="routerReplace">点击跳转</el-button>
-  </nav> -->
   <NavView></NavView>
   <div id="appContainer"></div>
+  <aside class="base-aside"></aside>
   <router-view />
 </template>
 <script setup lang="ts">
-// import { watch } from "vue";
-// import { useRouter } from "vue-router";
 import NavView from "@/views/NavView.vue";
-// const router = useRouter();
 // 主应用点击 router-link 进行跳转时，无异常
-// 进入子应用，点击子应用的 router-link 后，再次点击主应用的 router-link 不会发生跳转——
-// 这是因为点击子应用路由后，浏览器的history发生了变更，但主应用路由实例并未得到通知，所以再使用router-link发动变更时会出错
-// 使用a标签不会，但a标签会触发重新导航（影响用户体验，与现在前端路由理念相悖）
+// 进入子应用，点击子应用的 router-link 后，再次点击主应用的 router-link 不会发生跳转—— 因为在子应用发生路由跳转时，是基于子应用的router-base跳转
+// 使用a标签不会，但a标签会触发重新导航（影响用户体验，与现在前端路由理念相悖），但可以为其绑定click事件并使用History API
 
-// 解决如下：
-// const routerReplace = () => {
-//   router.replace("/app-vue3");
-// };
 </script>
 <style lang="scss">
 #base-app {
@@ -35,18 +20,24 @@ import NavView from "@/views/NavView.vue";
   color: #2c3e50;
   height: 100vh;
   width: 100vw;
+  display: grid;
+	grid-template-rows: repeat(6, 1fr);
+	grid-template-columns: repeat(6, 1fr);
+	gap: 0;
 }
-
 .base-nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
+  grid-area: 1 / 1 / 2 / 4;
+  border-bottom: 1px solid violet;
+}
+#appContainer {
+  width: calc(100vw - 500px);
+  height: 100%;
+  grid-area: 2 / 1 / 7 / 3;
+}
+.base-aside {
+  min-width: 499px;
+  height: 100%;
+  grid-area: 2 / 3 / 7 / 4;
+  border-left: 1px solid violet;
 }
 </style>

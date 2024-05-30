@@ -43,5 +43,5 @@ base-app::part(micro-app-var) {
 }
 
 :root {
-  --mirco-app-max-height: calc(100vh - 92px);
+  --mirco-app-max-height: calc(100*5/6vh);
 }

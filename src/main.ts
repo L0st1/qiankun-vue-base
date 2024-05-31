@@ -11,7 +11,7 @@ import "@/style/element/index.scss";
 import zhCn from "element-plus/dist/locale/zh-cn.mjs";
 import "dayjs/locale/zh-cn";
 import dayjs from "dayjs";
-import { useQiankun } from "./core";
+import { qiankunStart } from "./core";
 
 dayjs.locale("zh-cn");
 
@@ -25,5 +25,5 @@ createApp(App)
   .mount("#base-app");
 
 nextTick(() => {
-  useQiankun();
+  qiankunStart();
 });

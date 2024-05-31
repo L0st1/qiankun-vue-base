@@ -7,7 +7,7 @@ import {
 } from "qiankun";
 import { appList } from "./entry";
 
-export const useQiankun = (
+export const qiankunStart = (
   startOptions: any = {
     prefetch: false,
     // sandbox: {

@@ -1,15 +1,14 @@
 import { createStore } from "vuex";
 import createPersistedState from "vuex-persistedstate";
-//@ts-expect-error
-import { CHANGE_COUNT } from "./mutation-types.ts";
+import { CHANGE_COUNT } from "@/store/mutation-types";
 
 export default createStore({
   state: {
-    commonData: 0,
+    persistedData: 0,
   },
   mutations: {
-    [CHANGE_COUNT](state, { data }) {
-      state.commonData = data;
+    [CHANGE_COUNT](state, payload) {
+      state.persistedData = payload;
     },
   },
   actions: {},

@@ -6,6 +6,12 @@ export default createStore({
   state: {
     persistedData: 0,
   },
+  getters: {
+    xGetData: (state) => (protoName: string) => {
+      //@ts-ignore
+      return state[`${protoName}`]
+    },
+  },
   mutations: {
     [CHANGE_COUNT](state, payload) {
       state.persistedData = payload;

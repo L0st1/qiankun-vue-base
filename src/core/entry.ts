@@ -32,6 +32,6 @@ export const appList: RegistrableApp<Record<string, unknown>>[] = [
     entry: "//localhost:2000/app-vue3-default/",
     container: "#appContainer",
     activeRule: "/app-vue3",
-    props: { data: store },
+    props: { data: { store } },
   },
 ];

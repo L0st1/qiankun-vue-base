@@ -1,12 +1,16 @@
 <template>
-  <NavView></NavView>
-  <div id="appContainer"></div>
-  <BaseAside></BaseAside>
-  <router-view />
+  <el-config-provider :locale="zhCn" namespace="base">
+    <NavView></NavView>
+    <div id="appContainer"></div>
+    <BaseAside></BaseAside>
+    <router-view />
+  </el-config-provider>
 </template>
 <script setup lang="ts">
 import NavView from "@/views/NavView.vue";
 import BaseAside from "@/views/BaseAside.vue";
+//@ts-expect-error
+import zhCn from "element-plus/dist/locale/zh-cn.mjs";
 // 主应用点击 router-link 进行跳转时，无异常
 // 进入子应用，点击子应用的 router-link 后，再次点击主应用的 router-link 不会发生跳转—— 因为在子应用发生路由跳转时，是基于子应用的router-base跳转
 // 使用a标签不会，但a标签会触发重新导航（影响用户体验，与现在前端路由理念相悖），但可以为其绑定click事件并使用History API

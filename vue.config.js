@@ -5,8 +5,13 @@ const { defineConfig } = require("@vue/cli-service");
 const TerserPlugin = require("terser-webpack-plugin");
 // const CompressionWebpackPlugin = require("compression-webpack-plugin");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
-const { config: packageConfig } = require("./package.json");
-const { publicName, publicPath, pageTitle, port } = packageConfig;
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const AutoImport = require('unplugin-auto-import/webpack')
+const Components = require('unplugin-vue-components/webpack')
+const { ElementPlusResolver } = require('unplugin-vue-components/resolvers');
+
+const { config: { publicName, publicPath, pageTitle, port } } = require("./package.json");
+
 
 function resolve(dir) {
   return path.join(__dirname, dir);
@@ -33,6 +38,16 @@ module.exports = defineConfig({
   },
   configureWebpack: (config) => {
     const plugins = [];
+    plugins.push(
+      AutoImport({
+        resolvers: [ElementPlusResolver()],
+      })
+    );
+    plugins.push(
+      Components({
+        resolvers: [ElementPlusResolver()],
+      }),
+    );
     plugins.push(require("unplugin-element-plus/webpack")({})),
       plugins.push(
         new TerserPlugin({
@@ -48,9 +63,21 @@ module.exports = defineConfig({
             },
           },
           extractComments: false, // 是否将注释提取到一个单独的文件中
-          parallel: true, // 是否并⾏打包
+          parallel: false, // 是否并⾏打包
         })
       );
+    // plugins.push(
+    //   // 配置包分析器，输出到产物中
+    //   new BundleAnalyzerPlugin({
+    //     analyzerMode: 'static',
+    //     reportFilename: 'report.html',
+    //     defaultSizes: 'gzip',
+    //     generateStatsFile: true, // 如果为true，则Webpack Stats JSON文件将在bundle输出目录中生成
+    //     openAnalyzer: false, // 默认在浏览器中自动打开报告
+    //     statsFilename: 'stats.json', // 如果generateStatsFile为true，将会生成Webpack Stats JSON文件的名字
+    //     statsOptions: { source: false }
+    //   })
+    // )
 
     // // 开启gzip
     // plugins.push(
@@ -62,6 +89,15 @@ module.exports = defineConfig({
     //     minRatio: 0.8, // 压缩比
     //   })
     // );
+    plugins.push(
+      new BundleAnalyzerPlugin({
+        analyzerMode: "server", // 不启动展示打包报告的http服务器  127.0.0.1:8888
+        generateStatsFile: false, // 是否生成stats.json文件
+        openAnalyzer: false, // Automatically open report in default browser
+        logLevel: "silent" // 引用自动导入后分析程序错误如下，采用silent不输出信息
+        // No bundles were parsed. Analyzer will show only original module sizes from stats file.
+      }),
+    );
     // 开启分离js
     config.optimization = {
       minimize: true,
@@ -70,17 +106,18 @@ module.exports = defineConfig({
       ],
       splitChunks: {
         chunks: "all",
+        minChunks: 1, // 引用大于等于1次进行分包，完整导入时会加载所有Chunks
         maxInitialRequests: Infinity,
-        minSize: 1000 * 60,
+        minSize: 0,
+        maxSize: 172 * 1024,
         cacheGroups: {
+          // 通过缓存组将依赖单独打包
           vendor: {
             test: /[\\/]node_modules[\\/]/,
             name(module) {
-              // 排除node_modules 然后将 @ 替换为空——考虑到服务器的兼容
-              const packageName =
-                module.context.match(
-                  /[\\/]node_modules[\\/](.*?)([\\/]|$)/
-                )?.[1] || "";
+              const packageName = module.context.match(
+                /[\\/]node_modules[\\/](.*?)([\\/]|$)/
+              )[1] || "";
               return `npm.${packageName.replace("@", "")}`;
             },
           },
@@ -137,14 +174,14 @@ module.exports = defineConfig({
     // 避免全局样式无法注入shadow dom，也可手动添加:host
     // 如需更改第三方库样式，需要使用css-in-js方案
     config.module
-    .rule("string-replace-loader")
-    .test(/\.scss$/)
-    .use("string-replace-loader")
-    .loader("string-replace-loader")
-    .options({
-      search: ":root",
-      replace: ":root, :host",
-    });
+      .rule("string-replace-loader")
+      .test(/\.scss$/)
+      .use("string-replace-loader")
+      .loader("string-replace-loader")
+      .options({
+        search: ":root",
+        replace: ":root, :host",
+      });
     // 移除 preload 插件
     config.plugins.delete("preload");
     // 移除 prefetch 插件

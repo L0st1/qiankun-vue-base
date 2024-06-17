@@ -18,10 +18,10 @@ dayjs.locale("zh-cn");
 createApp(App)
   .use(store)
   .use(router)
-  .use(ElementPlus, {
-    locale: zhCn,
-    namespace: "base",
-  })
+  // .use(ElementPlus, {
+  //   locale: zhCn,
+  //   namespace: "base",
+  // })
   .mount("#base-app");
 
 nextTick(() => {

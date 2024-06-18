@@ -66,18 +66,6 @@ module.exports = defineConfig({
           parallel: false, // 是否并⾏打包
         })
       );
-    // plugins.push(
-    //   // 配置包分析器，输出到产物中
-    //   new BundleAnalyzerPlugin({
-    //     analyzerMode: 'static',
-    //     reportFilename: 'report.html',
-    //     defaultSizes: 'gzip',
-    //     generateStatsFile: true, // 如果为true，则Webpack Stats JSON文件将在bundle输出目录中生成
-    //     openAnalyzer: false, // 默认在浏览器中自动打开报告
-    //     statsFilename: 'stats.json', // 如果generateStatsFile为true，将会生成Webpack Stats JSON文件的名字
-    //     statsOptions: { source: false }
-    //   })
-    // )
 
     // // 开启gzip
     // plugins.push(
@@ -94,8 +82,16 @@ module.exports = defineConfig({
         analyzerMode: "server", // 不启动展示打包报告的http服务器  127.0.0.1:8888
         generateStatsFile: false, // 是否生成stats.json文件
         openAnalyzer: false, // Automatically open report in default browser
-        logLevel: "silent" // 引用自动导入后分析程序错误如下，采用silent不输出信息
+        logLevel: "silent" // 因为启用了webpack-server-dev 只能分析原始文件大小，采用silent不输出信息
         // No bundles were parsed. Analyzer will show only original module sizes from stats file.
+
+        //     analyzerMode: 'static',
+        //     reportFilename: 'report.html',
+        //     defaultSizes: 'gzip',
+        //     generateStatsFile: true, // 如果为true，则Webpack Stats JSON文件将在bundle输出目录中生成
+        //     openAnalyzer: false, // 默认在浏览器中自动打开报告
+        //     statsFilename: 'stats.json', // 如果generateStatsFile为true，将会生成Webpack Stats JSON文件的名字
+        //     statsOptions: { source: false }
       }),
     );
     // 开启分离js

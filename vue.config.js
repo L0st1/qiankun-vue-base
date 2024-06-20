@@ -150,6 +150,10 @@ module.exports = defineConfig({
           "@": resolve("src"),
         },
       },
+      externals: {
+        'element-plus': 'ElementPlus',
+        'vue': 'Vue',
+      }
     };
   },
   css: {
